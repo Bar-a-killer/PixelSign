@@ -1,2 +1,60 @@
 # PixelSign
-Secure Pixel Signature (SPS) embeds a cryptographic signature directly into the least significant bits of an image, enabling machine-verifiable authenticity checks while preserving visual integrity.
+
+Proof Inside Every Pixel
+
+---
+
+## 概念簡介
+
+PixelSign 是一套基於數位签簽和機器歷史驗證技術的圖像防假驗證系統，本計畫目的是為了區分人類創作和AI生成內容，防止未經證明的情況混淆。
+
+本技術核心是：
+- 使用數位签簽+hash技術，確認圖像本身未被修改
+- 將签簽資料隱藏於傳統圖像最低有效位 (LSB)
+- 任何輕微修改都會破壞此签簽，屬於高清準感測性証明
+
+---
+
+## Feature
+
+- **數位签簽技術**: ECC P-256 書簽，保護圖像不可偵改
+- **完全隱形的位元签簽**: 签簽隱藏於圖像最小的bit，不影響人眼視覺
+- **難以仿製，任何修改都破壞驗證**
+- **區分签簽與證明內容，容易擴張成多重签簽模型**
+
+---
+
+## 技術細節 (Workflow)
+
+### 創作者:
+- 提供 [原始資料]
+
+### 加密者(或第三方認證機構):
+- [原始資料] → (標準化) → [標準資料]
+- [標準資料] → (hash) → [摘要]
+- [摘要] → (用私鑰加密) → [签簽]
+- [標準資料] → (嵌入签簽浮水印) → [精製圖]
+
+### 驗證者:
+- [精製圖] → (提取签簽) → [签簽]
+- [精製圖] → (標準化) → [標準圖]
+- [標準圖] → (hash) → [新摘要]
+- [签簽] → (用公開鑰解密) → [原摘要]
+
+### 比對:
+- 新摘要 == 原摘要 → 驗證成功
+- 新摘要 != 原摘要 → 數據被改過或签簽偽造
+
+---
+
+## 未來擴張
+- 支援同時封裝多組签簽（多第三方同時認證）
+- 支援前季的後量字元符簽署模型（抗量字電腦的签簽技術）
+- 支援變成因常抽點驗證（適對繁複圖形或大型圖像）
+- 支援在圖片大小允許的前提下塞些作品資料
+
+---
+
+## License
+
+This project is released under the MIT License.
