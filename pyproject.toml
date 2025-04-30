@@ -1,0 +1,12 @@
+[project]
+name = "image-signature-demo"
+version = "0.1.0"
+description = "Secure image signing and verification system"
+authors = ["Bar <channingbar0324@gmail.com>"]
+requires-python = ">=3.8"
+dependencies = [
+    "pycryptodome",
+    "opencv-python",
+    "numpy",
+]
+
